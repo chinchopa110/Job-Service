@@ -45,16 +45,19 @@ set(ALL_SOURCES
     ${SERVICE_SOURCES}
     ${FILTER_SOURCES}
     ${UTILS_SOURCES}
-    src/main.cpp
 )
 
-add_executable(job_service ${ALL_SOURCES})
+add_executable(test_services ${ALL_SOURCES} tests/test_services.cpp)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-    target_compile_options(job_service PRIVATE -Wall -Wextra -pedantic)
+    target_compile_options(test_services PRIVATE -Wall -Wextra -pedantic)
 endif()
 
-set_target_properties(job_service PROPERTIES
+set_target_properties(test_services PROPERTIES
     CXX_STANDARD 17
     CXX_STANDARD_REQUIRED YES
 )
+
+# Enable testing
+enable_testing()
+add_test(NAME UnitTests COMMAND test_services)

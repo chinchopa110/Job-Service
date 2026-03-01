@@ -17,10 +17,7 @@ public:
                             const std::string& city, bool isRemote,
                             const std::string& profession);
     
-    bool updateJobPosting(const JobPosting& jobPosting);
     bool deleteJobPosting(size_t id);
-    std::optional<JobPosting> getJobPosting(size_t id) const;
-    std::vector<JobPosting> getAllJobPostings() const;
     std::vector<JobPosting> getJobPostingsByEmployer(size_t employerId) const;
     std::vector<JobPosting> searchJobPostings(const JobFilter& filter) const;
 

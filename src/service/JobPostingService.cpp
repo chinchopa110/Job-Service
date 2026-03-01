@@ -13,20 +13,8 @@ size_t JobPostingService::createJobPosting(size_t employerId, const std::string&
     return jobPostingRepository_.add(jobPosting);
 }
 
-bool JobPostingService::updateJobPosting(const JobPosting& jobPosting) {
-    return jobPostingRepository_.update(jobPosting);
-}
-
 bool JobPostingService::deleteJobPosting(size_t id) {
     return jobPostingRepository_.remove(id);
-}
-
-std::optional<JobPosting> JobPostingService::getJobPosting(size_t id) const {
-    return jobPostingRepository_.findById(id);
-}
-
-std::vector<JobPosting> JobPostingService::getAllJobPostings() const {
-    return jobPostingRepository_.findAll();
 }
 
 std::vector<JobPosting> JobPostingService::getJobPostingsByEmployer(size_t employerId) const {

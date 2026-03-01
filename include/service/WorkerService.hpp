@@ -15,11 +15,6 @@ public:
                         const std::string& city, const std::string& resume);
     
     bool updateWorker(const Worker& worker);
-    bool deleteWorker(size_t id);
-    std::optional<Worker> getWorker(size_t id) const;
-    std::vector<Worker> getAllWorkers() const;
-    std::vector<Worker> getWorkersByCity(const std::string& city) const;
-    std::vector<Worker> getWorkersBySkill(const std::string& skill) const;
 
 private:
     WorkerRepository workerRepository_;
