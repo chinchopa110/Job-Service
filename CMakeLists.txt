@@ -9,6 +9,13 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
+find_package(Boost 1.70 REQUIRED)
+find_package(Threads REQUIRED)
+
+if(Boost_FOUND)
+    include_directories(${Boost_INCLUDE_DIRS})
+endif()
+
 # Google Test
 include(FetchContent)
 FetchContent_Declare(
@@ -45,6 +52,12 @@ set(FILTER_SOURCES
     src/filter/JobFilter.cpp
 )
 
+set(API_SOURCES
+    src/api/JsonSerializer.cpp
+    src/api/JsonParser.cpp
+    src/api/HttpServer.cpp
+)
+
 set(ALL_SOURCES
     ${DOMAIN_SOURCES}
     ${REPOSITORY_SOURCES}
@@ -54,12 +67,18 @@ set(ALL_SOURCES
 
 add_executable(test_services ${ALL_SOURCES} tests/test_services.cpp)
 add_executable(job_service ${ALL_SOURCES} src/main.cpp)
+add_executable(api_server ${ALL_SOURCES} ${API_SOURCES} src/api_main.cpp)
+add_executable(test_api ${ALL_SOURCES} ${API_SOURCES} tests/test_api.cpp)
 
 target_link_libraries(test_services PRIVATE GTest::gtest_main)
+target_link_libraries(api_server PRIVATE Threads::Threads)
+target_link_libraries(test_api PRIVATE Threads::Threads)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     target_compile_options(test_services PRIVATE -Wall -Wextra -pedantic)
     target_compile_options(job_service PRIVATE -Wall -Wextra -pedantic)
+    target_compile_options(api_server PRIVATE -Wall -Wextra -pedantic)
+    target_compile_options(test_api PRIVATE -Wall -Wextra -pedantic)
 endif()
 
 set_target_properties(test_services PROPERTIES
@@ -67,6 +86,14 @@ set_target_properties(test_services PROPERTIES
     CXX_STANDARD_REQUIRED YES
 )
 set_target_properties(job_service PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED YES
+)
+set_target_properties(api_server PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED YES
+)
+set_target_properties(test_api PROPERTIES
     CXX_STANDARD 17
     CXX_STANDARD_REQUIRED YES
 )
