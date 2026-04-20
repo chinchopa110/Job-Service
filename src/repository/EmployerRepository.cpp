@@ -39,6 +39,16 @@ std::optional<Employer> EmployerRepository::findById(size_t id) const {
     return std::nullopt;
 }
 
+std::optional<Employer> EmployerRepository::findByEmail(const std::string& email) const {
+    std::shared_lock lock(mutex_);
+    for (const auto& pair : employers_) {
+        if (pair.second.getEmail() == email) {
+            return pair.second;
+        }
+    }
+    return std::nullopt;
+}
+
 std::vector<Employer> EmployerRepository::findAll() const {
     std::shared_lock lock(mutex_);
     std::vector<Employer> result;

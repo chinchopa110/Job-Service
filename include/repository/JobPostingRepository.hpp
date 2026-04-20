@@ -16,6 +16,7 @@ public:
     bool update(const JobPosting& jobPosting);
     bool remove(size_t id);
     std::optional<JobPosting> findById(size_t id) const;
+    std::optional<JobPosting> findByEmployerAndTitle(size_t employerId, const std::string& title, const std::string& profession) const;
     std::vector<JobPosting> findAll() const;
     std::vector<JobPosting> findByEmployerId(size_t employerId) const;
     std::vector<JobPosting> findByCity(const std::string& city) const;

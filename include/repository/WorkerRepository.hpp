@@ -15,6 +15,7 @@ public:
     bool update(const Worker& worker);
     bool remove(size_t id);
     std::optional<Worker> findById(size_t id) const;
+    std::optional<Worker> findByEmail(const std::string& email) const;
     std::vector<Worker> findAll() const;
     std::vector<Worker> findByCity(const std::string& city) const;
     std::vector<Worker> findBySkill(const std::string& skill) const;

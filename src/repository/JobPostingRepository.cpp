@@ -39,6 +39,20 @@ std::optional<JobPosting> JobPostingRepository::findById(size_t id) const {
     return std::nullopt;
 }
 
+std::optional<JobPosting> JobPostingRepository::findByEmployerAndTitle(
+    size_t employerId, const std::string& title, const std::string& profession) const {
+    std::shared_lock lock(mutex_);
+    for (const auto& pair : jobPostings_) {
+        const auto& j = pair.second;
+        if (j.getEmployerId() == employerId &&
+            j.getTitle() == title &&
+            j.getProfession() == profession) {
+            return j;
+        }
+    }
+    return std::nullopt;
+}
+
 std::vector<JobPosting> JobPostingRepository::findAll() const {
     std::shared_lock lock(mutex_);
     std::vector<JobPosting> result;

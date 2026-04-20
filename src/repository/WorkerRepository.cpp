@@ -39,6 +39,16 @@ std::optional<Worker> WorkerRepository::findById(size_t id) const {
     return std::nullopt;
 }
 
+std::optional<Worker> WorkerRepository::findByEmail(const std::string& email) const {
+    std::shared_lock lock(mutex_);
+    for (const auto& pair : workers_) {
+        if (pair.second.getEmail() == email) {
+            return pair.second;
+        }
+    }
+    return std::nullopt;
+}
+
 std::vector<Worker> WorkerRepository::findAll() const {
     std::shared_lock lock(mutex_);
     std::vector<Worker> result;

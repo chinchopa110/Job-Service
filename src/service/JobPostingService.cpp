@@ -8,6 +8,10 @@ size_t JobPostingService::createJobPosting(size_t employerId, const std::string&
                                            const std::string& description, int salary,
                                            const std::string& city, bool isRemote,
                                            const std::string& profession) {
+    auto existing = jobPostingRepository_.findByEmployerAndTitle(employerId, title, profession);
+    if (existing.has_value()) {
+        return existing->getId();
+    }
     JobPosting jobPosting(0, employerId, title, description, salary, city, isRemote,
                           std::chrono::system_clock::now(), profession);
     return jobPostingRepository_.add(jobPosting);

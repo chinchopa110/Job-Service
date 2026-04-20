@@ -15,6 +15,7 @@ public:
     bool update(const Employer& employer);
     bool remove(size_t id);
     std::optional<Employer> findById(size_t id) const;
+    std::optional<Employer> findByEmail(const std::string& email) const;
     std::vector<Employer> findAll() const;
     std::vector<Employer> findByCity(const std::string& city) const;
 
